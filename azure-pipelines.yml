@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'oyeyemigabriel97cr'
+    repository: 'hng-11'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      stage-0
+      latest
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Visual Studio Enterprise Subscription(9fad2e91-c447-4235-acfe-62a428c06d03)'
+    appType: 'webAppContainer'
+    WebAppName: 'hng-stage-0'
+    DockerNamespace: 'hub.docker.com'
+    DockerRepository: 'hng-11'
+    DockerImageTag: 'latest'
+    StartupCommand: 'nginx -g daemon off'
