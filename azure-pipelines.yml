@@ -13,7 +13,7 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'dockerhub'
+    containerRegistry: 'oyeyemigabriel97cr'
     repository: 'hng-11'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
@@ -24,7 +24,7 @@ steps:
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
-    azureSubscription: 'azureSC'
+    azureSubscription: 'Visual Studio Enterprise Subscription(9fad2e91-c447-4235-acfe-62a428c06d03)'
     appType: 'webAppContainer'
     WebAppName: 'hng-stage-0'
     DockerNamespace: 'hub.docker.com'
