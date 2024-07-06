@@ -35,6 +35,15 @@ create_user() {
         echo "Group $username created" | tee -a $LOG_FILE
     fi
 
+    # Create additional groups if they don't exist
+    IFS=',' read -ra ADDR <<< "$groups"
+    for group in "${ADDR[@]}"; do
+        if ! getent group "$group" > /dev/null 2>&1; then
+            groupadd "$group"
+            echo "Group $group created" | tee -a $LOG_FILE
+        fi
+    done
+
     # Create the user
     if ! id "$username" > /dev/null 2>&1; then
         useradd -m -g "$username" -G "$groups" "$username"
@@ -53,6 +62,9 @@ create_user() {
     else
         echo "User $username already exists" | tee -a $LOG_FILE
     fi
+
+    # Add user to additional groups
+    usermod -a -G "$groups" "$username"
 }
 
 # Read the user list file
