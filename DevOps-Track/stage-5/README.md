@@ -201,3 +201,48 @@ Log rotation is configured to manage the size and retention of log files. The co
 ## Conclusion
 
 Devopsfetch is a comprehensive tool for monitoring and logging critical system information, making it invaluable for DevOps professionals. With its easy installation and configuration, it ensures continuous monitoring and easy access to important system metrics.
+
+## Sample Command and Output
+
+To display activities from the last 2 hours using `devopsfetch`, you can use the following command:
+
+### Sample Command
+
+```bash
+devopsfetch -t "starttime 12:00:00" "stoptime 14:00:00"
+```
+
+### Sample Output
+
+```plaintext
+Displaying activities from 2 hours ago to now:
+-- Logs begin at Mon 2024-07-22 12:00:00 UTC, end at Mon 2024-07-22 14:00:00 UTC. --
+TIME                          _HOSTNAME           MESSAGE
+2024-07-22 12:01:22           hostname            Started Session 1 of user root.
+2024-07-22 12:05:10           hostname            docker0: port 1(veth1234abcd) entered blocking state
+2024-07-22 12:05:10           hostname            docker0: port 1(veth1234abcd) entered disabled state
+2024-07-22 12:05:10           hostname            device veth1234abcd entered promiscuous mode
+2024-07-22 12:05:10           hostname            IPv6: ADDRCONF(NETDEV_UP): veth1234abcd: link is not ready
+2024-07-22 12:05:10           hostname            IPv6: ADDRCONF(NETDEV_CHANGE): veth1234abcd: link becomes ready
+2024-07-22 12:05:10           hostname            docker0: port 1(veth1234abcd) entered blocking state
+2024-07-22 12:05:10           hostname            docker0: port 1(veth1234abcd) entered forwarding state
+2024-07-22 12:05:10           hostname            br-5678efgh: port 1(veth5678efgh) entered blocking state
+2024-07-22 12:05:10           hostname            br-5678efgh: port 1(veth5678efgh) entered disabled state
+2024-07-22 12:05:10           hostname            device veth5678efgh entered promiscuous mode
+2024-07-22 12:05:10           hostname            IPv6: ADDRCONF(NETDEV_UP): veth5678efgh: link is not ready
+2024-07-22 12:05:10           hostname            IPv6: ADDRCONF(NETDEV_CHANGE): veth5678efgh: link becomes ready
+2024-07-22 12:05:10           hostname            br-5678efgh: port 1(veth5678efgh) entered blocking state
+2024-07-22 12:05:10           hostname            br-5678efgh: port 1(veth5678efgh) entered forwarding state
+2024-07-22 12:10:15           hostname            dockerd[1234]: Container abcdefgh1234 started
+2024-07-22 12:12:35           hostname            sshd[1234]: Accepted password for user1 from 192.168.1.100 port 12345 ssh2
+2024-07-22 12:12:35           hostname            sshd[1234]: pam_unix(sshd:session): session opened for user user1 by (uid=0)
+2024-07-22 12:12:36           hostname            systemd[1]: Started Session 2 of user user1.
+2024-07-22 12:20:22           hostname            sshd[1234]: Received disconnect from 192.168.1.100 port 12345:11: disconnected by user
+2024-07-22 12:20:22           hostname            sshd[1234]: Disconnected from user1 192.168.1.100 port 12345
+2024-07-22 12:20:22           hostname            sshd[1234]: pam_unix(sshd:session): session closed for user user1
+2024-07-22 12:22:10           hostname            device veth5678efgh left promiscuous mode
+2024-07-22 12:22:10           hostname            br-5678efgh: port 1(veth5678efgh) entered disabled state
+2024-07-22 12:22:15           hostname            dockerd[1234]: Container abcdefgh1234 stopped
+2024-07-22 12:25:30           hostname            systemd[1]: Started Session 3 of user root.
+...
+```
