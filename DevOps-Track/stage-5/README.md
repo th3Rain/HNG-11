@@ -15,12 +15,12 @@ Devopsfetch is a tool for DevOps professionals to collect and display system inf
 
 3.	**Dependencies:**
    -	The installation script installs necessary dependencies, but you should be aware of them:
-      +	iproute2 for the ss command to list active ports.
-      +	docker.io for managing Docker images and containers.
-      +	finger for displaying user information.
-      +	nginx for Nginx server configuration information.
-      +	logrotate for log rotation to manage log file size and retention.
-      +	systemd for managing the service and timer.
+      -	iproute2 for the ss command to list active ports.
+      -	docker.io for managing Docker images and containers.
+      -	finger for displaying user information.
+      -	nginx for Nginx server configuration information.
+      -	logrotate for log rotation to manage log file size and retention.
+      -	systemd for managing the service and timer.
 
 4.	**Internet Connection:**
    - An active internet connection is required to download and install the necessary packages.
@@ -39,7 +39,7 @@ To install Devopsfetch, follow these steps:
 
 2. **Run the Installation Script:**
    ```bash
-   chmod +x install_devopsfetch.sh
+   chmod -x install_devopsfetch.sh
    ./install_devopsfetch.sh
    ```
 
