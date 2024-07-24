@@ -61,7 +61,7 @@ list_ports() {
 
     log "Listing active ports and services"
     echo "Active ports and services:"
-    ss -tuln | tee -a $LOG_FILE
+    ss -tuln | awk 'NR==1{print "Proto Recv-Q Send-Q Local Address          Foreign Address        State"} NR>1{print}' | column -t | tee -a $LOG_FILE
 }
 
 port_details() {
@@ -74,7 +74,7 @@ port_details() {
 
     log "Displaying details for port $port"
     echo "Details for port $port:"
-    ss -tuln | grep ":$port " | tee -a $LOG_FILE
+    ss -tuln | grep ":$port " | awk 'NR==1{print "Proto Recv-Q Send-Q Local Address          Foreign Address        State"} NR>1{print}' | column -t | tee -a $LOG_FILE
 }
 
 list_docker() {
@@ -86,9 +86,9 @@ list_docker() {
 
     log "Listing Docker images and containers"
     echo "Docker images:"
-    docker images | tee -a $LOG_FILE
+    docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.ImageID}}\t{{.CreatedSince}}\t{{.Size}}" | tee -a $LOG_FILE
     echo "Docker containers:"
-    docker ps -a | tee -a $LOG_FILE
+    docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}" | tee -a $LOG_FILE
 }
 
 docker_details() {
@@ -101,7 +101,7 @@ docker_details() {
 
     log "Displaying details for Docker container $container"
     echo "Details for Docker container $container:"
-    docker inspect $container | tee -a $LOG_FILE
+    docker inspect $container | jq . | tee -a $LOG_FILE
 }
 
 list_nginx() {
@@ -113,7 +113,7 @@ list_nginx() {
 
     log "Listing Nginx domains and their ports"
     echo "Nginx domains and their ports:"
-    grep -r "server_name" /etc/nginx/sites-enabled/ | tee -a $LOG_FILE
+    grep -r "server_name" /etc/nginx/sites-enabled/ | awk '{print $1 "\t" $2 "\t" $3}' | column -t | tee -a $LOG_FILE
 }
 
 nginx_details() {
@@ -126,7 +126,7 @@ nginx_details() {
 
     log "Displaying details for Nginx domain $domain"
     echo "Details for Nginx domain $domain:"
-    grep -r "server_name $domain" /etc/nginx/sites-enabled/ | tee -a $LOG_FILE
+    grep -r "server_name $domain" /etc/nginx/sites-enabled/ | awk '{print $1 "\t" $2 "\t" $3}' | column -t | tee -a $LOG_FILE
 }
 
 list_users() {
@@ -138,7 +138,7 @@ list_users() {
 
     log "Listing users and their last login times"
     echo "Users and their last login times:"
-    lastlog | tee -a $LOG_FILE
+    lastlog | column -t | tee -a $LOG_FILE
 }
 
 user_details() {
